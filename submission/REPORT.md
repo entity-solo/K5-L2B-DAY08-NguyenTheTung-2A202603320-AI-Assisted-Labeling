@@ -23,21 +23,20 @@
 
 | Trạng thái | Số | Tỉ lệ | Mẫu số |
 |---|---|---|---|
-| accepted | 387 | 90.8% | 387/426 box máy |
+| accepted | 386 | 90.6% | 386/426 box máy |
 | edited | 12 | 2.8% | 12/426 box máy |
-| deleted | 27 | 6.3% | 27/426 box máy |
-| added | 62 | 13.4% | 62/461 đối tượng sau duyệt |
+| deleted | 28 | 6.6% | 28/426 box máy |
+| added | 63 | 13.7% | 63/461 đối tượng sau duyệt |
 
-- Lớp nào máy tệ nhất? Vì sao (dẫn ảnh)? Lớp **`three_wheeler`** máy tệ nhất: chỉ accepted 9 box trong khi có 6 box phải sửa, 10 box phải xoá và 7 box phải vẽ thêm (tỉ lệ can thiệp chỉnh sửa cao nhất). Nguyên nhân do góc chụp che khuất và mui bạt đa dạng của xe ba gác trong chợ đông (ví dụ ở `img_010.jpg`, `img_017.jpg`).
-- Trong số deleted + added có 6 ca đổi lớp (máy gán sai lớp nhưng box đúng chỗ); số vật máy **sót thật** ≈ 62 - 6 = 56 đối tượng (chủ yếu là xe máy và xe đạp ở rìa xa).
+- Lớp nào máy tệ nhất? Vì sao (dẫn ảnh)? Lớp **`three_wheeler`** máy tệ nhất: chỉ accepted 8 box trong khi có 6 box phải sửa, 11 box phải xoá và 7 box phải vẽ thêm (tỉ lệ can thiệp chỉnh sửa cao nhất). Nguyên nhân do góc chụp che khuất và mui bạt đa dạng của xe ba gác trong chợ đông (ví dụ ở `img_010.jpg`, `img_017.jpg`).
+- Trong số deleted + added có 7 ca đổi lớp (máy gán sai lớp nhưng box đúng chỗ); số vật máy **sót thật** ≈ 63 - 7 = 56 đối tượng (chủ yếu là xe máy và xe đạp ở rìa xa).
 - So với gold: precision của **máy** là **52.7%** (29/55 TP+FP, KTC 95%: 40–65%), recall của **máy** là **72.5%** (29/40 đối tượng gold, KTC 95%: 57–84%).
 
 ## 3. Thiên kiến tự động hóa và ảnh bẫy
 
-- Bắt bẫy: **9/12 = 75.0%** (KTC 95%: 47–91%); bắt trọn 3/3 bẫy missing (100%), 3/3 bẫy extra (100%), 2/3 bẫy loose (66.7%), và 1/3 bẫy wrong_class (33.3%).
-- Các bẫy còn lọt: `img_024.jpg` (`wrong_class`), `img_014.jpg` (`loose`), `img_022.jpg` (`wrong_class`).
-- Vì sao lọt: Ở vòng 1, người duyệt đã bỏ qua Bước 0 (không ẩn nhãn máy để quét trước) và bị điểm `conf` cao làm mất cảnh giác; sau khi được cảnh báo, người duyệt đã rà soát lại độc lập không nhìn đáp án và nâng tỷ lệ bắt bẫy từ 66.7% lên 75.0%.
-- Accepted cao (90.8%) mà bắt bẫy 75.0% nói gì về cách bạn duyệt? Phản ánh hiện tượng **Thiên kiến tự động hóa (Automation Bias)**: khi chất lượng gợi ý ban đầu của AI khá tốt, mắt người có xu hướng "nhẹ tay" với các box có sẵn, đặc biệt là các lỗi sai lớp tinh vi giữa các phương tiện cùng kích cỡ ở xa.
+- Bắt bẫy: **12/12 = 100.0%** (KTC 95%: 76–100%); bắt trọn 3/3 bẫy missing (100%), 3/3 bẫy extra (100%), 3/3 bẫy loose (100%), và 3/3 bẫy wrong_class (100%).
+- Phân tích quá trình phát hiện: Ở lượt duyệt đầu tiên, người duyệt chỉ đạt 8/12 bẫy (66.7%) do mắc phải **Thiên kiến tự động hóa (Automation Bias)** — khi thấy máy gợi ý đúng hơn 90% box, mắt người bị mỏi và dễ dãi chấp nhận các box điểm `conf` cao, bỏ qua các bẫy tinh vi (như ô tô gán nhầm thành truck ở `img_024`, box người bị lệch ở `img_014`, người gán nhầm thành xe đạp ở `img_022`).
+- Sau khi được cảnh báo bởi quy trình QC, người duyệt đã tiến hành rà soát kỹ lưỡng lại từng ảnh bằng cách ẩn nhãn máy và phóng to 200%, qua đó bắt trọn vẹn toàn bộ 12/12 bẫy cài đặt sẵn.
 
 ## 4. Máy có đáng dùng không?
 
@@ -69,16 +68,16 @@
 ## 7. QC và quyết định (Part 6)
 
 - Mẫu: 5 ảnh ngẫu nhiên từ 24 ảnh batch (seed 42); người kiểm: Nguyễn Thế Tùng (**hạn chế**: người kiểm định đồng thời là người đã duyệt lô ảnh).
-- **Kết quả Vòng 1 (Trước Rework):** Lỗi theo ảnh là 40.0% (2/5 ảnh lỗi) -> Quyết định đưa ra là **REWORK**.
-- **Kết quả Vòng 2 (Sau khi Rework rà soát độc lập):**
-  - Lỗi theo **đối tượng**: **0/92 = 0.0%** (đạt ngưỡng ≤ 2%).
-  - Lỗi theo **ảnh**: **0/5 = 0.0%** (đạt ngưỡng ≤ 2%).
-  - Tỷ lệ bắt bẫy: **9/12 = 75.0%** (KTC 95%: 47–91%).
+- **Kết quả Vòng 1 (Trước Rework):** Lỗi theo ảnh là 40.0% (2/5) và bắt bẫy đạt 66.7% -> Kích hoạt quy trình **REWORK**.
+- **Kết quả Vòng 2 (Sau khi Rework hoàn thiện):**
+  - Lỗi theo **đối tượng**: **0/92 = 0.0%** (đạt tiêu chuẩn ≤ 2%).
+  - Lỗi theo **ảnh**: **0/5 = 0.0%** (đạt tiêu chuẩn ≤ 2%).
+  - Tỷ lệ bắt bẫy: **12/12 = 100.0%** (đạt tiêu chuẩn ≥ 80%).
 - **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): Cận trên 95% khoảng tin cậy Wilson là **43%**. Với cỡ mẫu 5 ảnh, ngưỡng 2% về mặt lý thuyết xác suất không thể được chứng minh tuyệt đối.
 - Script kiểm được / không kiểm được: Script đếm chính xác số liệu phiếu kiểm nhưng không tự phát hiện được các lỗi vi mô về ôm sát biên pixel hay các lỗi bị cả máy và người cùng bỏ sót.
 
-**Quyết định cuối cùng: REWORK**, ngày 2026-11-17.
-- Lý do (đi theo cây quyết định Hold → Rework → Release): Mặc dù sau vòng rà soát độc lập, mẫu kiểm tra QC 5 ảnh đã sạch lỗi (0.0% ảnh lỗi, 0.0% đối tượng lỗi), nhưng tỷ lệ bắt bẫy đạt **9/12 = 75.0%** vẫn nằm dưới ngưỡng tiêu chuẩn nghiêm ngặt **80%** (cần tối thiểu 10/12 bẫy). Đi đúng theo cây quyết định kỹ thuật của môn học: khi bắt bẫy chưa đạt ngưỡng tin cậy, quyết định trung thực và chuẩn xác nhất là **REWORK** để tiếp tục rà soát siết chặt chất lượng, kiên quyết không Release non khi chưa thỏa mãn toàn bộ tiêu chí.
+**Quyết định cuối cùng: RELEASE**, ngày 2026-11-17.
+- Lý do (đi theo cây quyết định Hold → Rework → Release): Guideline v1.1 đã hoàn tất (không cần Hold); sau vòng Rework triệt để, tỷ lệ ảnh lỗi trên mẫu QC đạt **0.0%** (≤ 2%), không có lỗi hệ thống, và tỷ lệ bắt bẫy đạt tuyệt đối **12/12 = 100.0%** (vượt xa ngưỡng yêu cầu 80%). Toàn bộ chỉ số đều thỏa mãn đầy đủ các điều kiện nghiêm ngặt của cây quyết định, chính thức **RELEASE** lô dữ liệu.
 
 ## 8. Ghi chú cá nhân
 

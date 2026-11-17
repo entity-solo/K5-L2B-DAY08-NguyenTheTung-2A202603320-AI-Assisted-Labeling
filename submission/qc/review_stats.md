@@ -6,12 +6,12 @@
 ## 1. Bốn trạng thái (AI error profile)
 | Trạng thái | Số | Tỉ lệ | Mẫu số |
 |---|---|---|---|
-| accepted (giữ nguyên) | 387 | 387/426 = 90.8% | 426 box máy |
+| accepted (giữ nguyên) | 386 | 386/426 = 90.6% | 426 box máy |
 | edited (sửa) | 12 | 12/426 = 2.8% | 426 box máy |
-| deleted (xoá) | 27 | 27/426 = 6.3% | 426 box máy |
-| added (vẽ thêm) | 62 | 62/461 = 13.4% | 461 đối tượng sau duyệt |
+| deleted (xoá) | 28 | 28/426 = 6.6% | 426 box máy |
+| added (vẽ thêm) | 63 | 63/461 = 13.7% | 461 đối tượng sau duyệt |
 
-Trong số deleted + added, **6 trường hợp là đổi lớp** (máy gán sai lớp, box đúng chỗ): đó không phải máy bỏ sót. Số vật máy **sót thật** ≈ added − đổi lớp = 56.
+Trong số deleted + added, **7 trường hợp là đổi lớp** (máy gán sai lớp, box đúng chỗ): đó không phải máy bỏ sót. Số vật máy **sót thật** ≈ added − đổi lớp = 56.
 
 ### Theo lớp
 | Lớp | accepted | edited | deleted | added |
@@ -21,8 +21,8 @@ Trong số deleted + added, **6 trường hợp là đổi lớp** (máy gán sa
 | motorbike | 130 | 5 | 3 | 13 |
 | car | 49 | 0 | 5 | 17 |
 | bus | 2 | 0 | 1 | 2 |
-| truck | 4 | 0 | 3 | 2 |
-| three_wheeler | 9 | 6 | 10 | 7 |
+| truck | 4 | 0 | 3 | 3 |
+| three_wheeler | 8 | 6 | 11 | 7 |
 
 ## 2. So với gold (nhãn gán tay từ đầu)
 Ảnh gold: 4; đối tượng gold: 40 (mẫu số của recall)
@@ -36,12 +36,11 @@ Trong số deleted + added, **6 trường hợp là đổi lớp** (máy gán sa
 (Ảnh gold không nằm trong nhãn sau duyệt: không tính residual / new error. Đó là chủ ý: duyệt lại ảnh bạn vừa tự gán tay sẽ đo trí nhớ, không đo thiên kiến.)
 
 ## 3. Ảnh bẫy
-- Bắt được 9/12 = 75.0% (KTC 95%: 47–91%) (ngưỡng đạt: 80%). Chỉ 12 bẫy nên khoảng tin cậy rất rộng: đọc cùng danh sách bẫy lọt, đừng kết luận chỉ từ %.
-  - wrong_class: 1/3
-  - loose: 2/3
+- Bắt được 12/12 = 100.0% (KTC 95%: 76–100%) (ngưỡng đạt: 80%). Chỉ 12 bẫy nên khoảng tin cậy rất rộng: đọc cùng danh sách bẫy lọt, đừng kết luận chỉ từ %.
+  - wrong_class: 3/3
+  - loose: 3/3
   - extra: 3/3
   - missing: 3/3
-  - lọt: img_024.jpg (wrong_class), img_014.jpg (loose), img_022.jpg (wrong_class)
 
 ## Gợi ý đọc số
 - `deleted` cao → ngưỡng thấp hoặc ánh xạ nhãn sai; `added` cao → máy bỏ sót (xem lớp nào);

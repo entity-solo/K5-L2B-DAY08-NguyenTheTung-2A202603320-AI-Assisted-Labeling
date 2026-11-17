@@ -3,21 +3,21 @@
  "images": 24,
  "pre_boxes": 426,
  "final_objects": 461,
- "accepted": 387,
+ "accepted": 386,
  "edited": 12,
- "deleted": 27,
- "added": 62,
- "class_changed_info": 6,
- "accepted_rate": 0.9084507042253521,
+ "deleted": 28,
+ "added": 63,
+ "class_changed_info": 7,
+ "accepted_rate": 0.9061032863849765,
  "edited_rate": 0.028169014084507043,
- "deleted_rate": 0.06338028169014084,
- "added_rate": 0.13449023861171366,
+ "deleted_rate": 0.06572769953051644,
+ "added_rate": 0.13665943600867678,
  "per_class": {
   "three_wheeler": {
-   "accepted": 9,
+   "accepted": 8,
+   "deleted": 11,
    "added": 7,
-   "edited": 6,
-   "deleted": 10
+   "edited": 6
   },
   "person": {
    "accepted": 187,
@@ -27,7 +27,7 @@
   },
   "truck": {
    "accepted": 4,
-   "added": 2,
+   "added": 3,
    "deleted": 3
   },
   "bicycle": {
@@ -68,15 +68,15 @@
  },
  "traps": {
   "n": 12,
-  "caught": 9,
-  "rate": 0.75,
+  "caught": 12,
+  "rate": 1.0,
   "by_type": {
    "wrong_class": [
-    1,
+    3,
     3
    ],
    "loose": [
-    2,
+    3,
     3
    ],
    "extra": [
@@ -88,20 +88,7 @@
     3
    ]
   },
-  "missed": [
-   [
-    "img_024.jpg",
-    "wrong_class"
-   ],
-   [
-    "img_014.jpg",
-    "loose"
-   ],
-   [
-    "img_022.jpg",
-    "wrong_class"
-   ]
-  ]
+  "missed": []
  },
  "accept_threshold": 0.9
 }

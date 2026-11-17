@@ -3,12 +3,12 @@
  "images": 24,
  "objects": 472,
  "per_class": {
-  "motorbike": 153,
-  "person": 209,
+  "person": 210,
   "truck": 7,
-  "bicycle": 9,
-  "three_wheeler": 23,
-  "car": 67,
+  "bicycle": 8,
+  "motorbike": 153,
+  "three_wheeler": 22,
+  "car": 68,
   "bus": 4
  },
  "images_replaced_by_qc_fix": []
