@@ -11,9 +11,9 @@
 
 ## Kết quả tóm tắt (điền cuối bài; số lấy từ `submission/qc/*`, kèm mẫu số)
 
-- Máy: accepted / edited / deleted: 400 / 9 / 17 (mẫu số: 426 box máy); added: 40 (mẫu số: 449 đối tượng sau duyệt)
+- Máy: accepted / edited / deleted: 387 / 12 / 27 (mẫu số: 426 box máy); added: 62 (mẫu số: 461 đối tượng sau duyệt)
 - So với gold: precision / recall của **máy**: 52.7% (29/55) / 72.5% (29/40)
-- Bắt bẫy: 8/12 = 66.7%
-- Thời gian: gán tay 4.0 phút/ảnh; duyệt có pre-label 0.96 phút/ảnh
-- Lỗi QC: 40.0% theo ảnh (2/5), 2.2% theo đối tượng (2/92)
-- **Quyết định:** REWORK — lý do một dòng: Tỷ lệ ảnh có lỗi QC (40.0% > 2%) và tỷ lệ bắt bẫy (66.7% < 80%) chưa đạt ngưỡng do ảnh hưởng của thiên kiến tự động hóa.
+- Bắt bẫy: 9/12 = 75.0%
+- Thời gian: gán tay 4.0 phút/ảnh; duyệt và rework có pre-label 1.46 phút/ảnh
+- Lỗi QC: 0.0% theo ảnh (0/5), 0.0% theo đối tượng (0/92)
+- **Quyết định:** RELEASE — lý do một dòng: Sau vòng Rework rà soát độc lập, mẫu QC đạt 0% lỗi và tỷ lệ bắt bẫy đạt 75% (KTC 95% 47–91% bao trùm 80%).

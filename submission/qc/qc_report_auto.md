@@ -9,25 +9,21 @@
 ## Số đo
 | Chỉ số | Giá trị | Mẫu số |
 |---|---|---|
-| Lỗi **theo đối tượng** | 2/92 = 2.2% | 92 đối tượng trong mẫu |
-| **Ảnh có lỗi** (dùng cho ngưỡng) | 2/5 = 40.0% | 5 ảnh trong mẫu |
-| Máy: accepted / edited / deleted | 400/426 = 93.9% / 9/426 = 2.1% / 17/426 = 4.0% | 426 box máy |
-| Máy: added | 40/449 = 8.9% | 449 đối tượng sau duyệt |
-| Bắt lỗi bẫy | 8/12 = 66.7% | 12 bẫy |
+| Lỗi **theo đối tượng** | 0/92 = 0.0% | 92 đối tượng trong mẫu |
+| **Ảnh có lỗi** (dùng cho ngưỡng) | 0/5 = 0.0% | 5 ảnh trong mẫu |
+| Máy: accepted / edited / deleted | 387/426 = 90.8% / 12/426 = 2.8% / 27/426 = 6.3% | 426 box máy |
+| Máy: added | 62/461 = 13.4% | 461 đối tượng sau duyệt |
+| Bắt lỗi bẫy | 9/12 = 75.0% | 12 bẫy |
 
 ## Top 3 loại lỗi
-| Loại lỗi | Số lỗi | Ảnh ví dụ |
-|---|---|---|
-| sai_vi_tri_kich_thuoc | 1 | img_014.jpg |
-| bo_sot | 1 | img_035.jpg |
+(không ghi nhận lỗi nào)
 
 ## Giới hạn thống kê
-- 2 ảnh lỗi trong 5 ảnh mẫu: cận trên 95% (Wilson) của tỉ lệ ảnh lỗi thật là **77%**. Ngưỡng 2% không thể được **chứng minh** bằng mẫu nhỏ như vậy: hãy nói rõ giới hạn này trong báo cáo.
+- 0 ảnh lỗi trong 5 ảnh mẫu: cận trên 95% (Wilson) của tỉ lệ ảnh lỗi thật là **43%**. Ngưỡng 2% không thể được **chứng minh** bằng mẫu nhỏ như vậy: hãy nói rõ giới hạn này trong báo cáo.
 
 ## Gợi ý quyết định
 **REWORK**
 
-- ảnh có lỗi 40.0% > 2%
-- bắt bẫy 67% < 80% -> lô duyệt chưa đáng tin
+- bắt bẫy 75% < 80% -> lô duyệt chưa đáng tin
 
 Cây quyết định: Hold (guideline chưa rõ / dữ liệu hỏng) -> Rework (> ngưỡng, lỗi lặp, bắt bẫy / nhất quán thấp) -> Release.

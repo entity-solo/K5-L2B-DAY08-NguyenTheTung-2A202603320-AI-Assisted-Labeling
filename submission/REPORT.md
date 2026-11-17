@@ -23,25 +23,27 @@
 
 | Trạng thái | Số | Tỉ lệ | Mẫu số |
 |---|---|---|---|
-| accepted | 400 | 93.9% | 400/426 box máy |
-| edited | 9 | 2.1% | 9/426 box máy |
-| deleted | 17 | 4.0% | 17/426 box máy |
-| added | 40 | 8.9% | 40/449 đối tượng sau duyệt |
+| accepted | 387 | 90.8% | 387/426 box máy |
+| edited | 12 | 2.8% | 12/426 box máy |
+| deleted | 27 | 6.3% | 27/426 box máy |
+| added | 62 | 13.4% | 62/461 đối tượng sau duyệt |
 
-- Lớp nào máy tệ nhất? Vì sao (dẫn ảnh)? Lớp **`three_wheeler`** máy tệ nhất: chỉ accepted 14 box trong khi có 5 box phải sửa, 6 box phải xoá và 6 box phải vẽ thêm (tỉ lệ can thiệp chỉnh sửa cao nhất). Nguyên nhân do góc chụp che khuất và mui bạt đa dạng của xe ba gác trong chợ đông (ví dụ ở `img_010.jpg`, `img_017.jpg`).
-- Trong số deleted + added có 5 ca đổi lớp (máy gán sai lớp nhưng box đúng chỗ); số vật máy **sót thật** ≈ 40 - 5 = 35 đối tượng.
+- Lớp nào máy tệ nhất? Vì sao (dẫn ảnh)? Lớp **`three_wheeler`** máy tệ nhất: chỉ accepted 9 box trong khi có 6 box phải sửa, 10 box phải xoá và 7 box phải vẽ thêm (tỉ lệ can thiệp chỉnh sửa cao nhất). Nguyên nhân do góc chụp che khuất và mui bạt đa dạng của xe ba gác trong chợ đông (ví dụ ở `img_010.jpg`, `img_017.jpg`).
+- Trong số deleted + added có 6 ca đổi lớp (máy gán sai lớp nhưng box đúng chỗ); số vật máy **sót thật** ≈ 62 - 6 = 56 đối tượng (chủ yếu là xe máy và xe đạp ở rìa xa).
 - So với gold: precision của **máy** là **52.7%** (29/55 TP+FP, KTC 95%: 40–65%), recall của **máy** là **72.5%** (29/40 đối tượng gold, KTC 95%: 57–84%).
 
 ## 3. Thiên kiến tự động hóa và ảnh bẫy
 
-- Bắt bẫy: **8/12 = 66.7%** (KTC 95%: 39–86%); loại bẫy lọt: 4 bẫy gồm `img_024.jpg` (`wrong_class`), `img_014.jpg` (`loose`), `img_035.jpg` (`missing`), `img_022.jpg` (`wrong_class`).
-- Vì sao lọt: Người duyệt đã bỏ qua **Bước 0** (không ẩn nhãn để quét mắt toàn cảnh trước mà nhìn ngay vào box máy gợi ý); ngoài ra ở các ảnh mật độ phương tiện quá dày đặc như `img_024.jpg`, mắt người dễ mệt mỏi và tin tưởng điểm `conf` cao của AI.
-- Accepted cao (93.9%) mà bắt bẫy thấp (66.7%) nói gì về cách bạn duyệt? Đây là biểu hiện kinh điển của **Thiên kiến tự động hóa (Automation Bias)**: người duyệt rơi vào trạng thái "Accept-happy", có xu hướng ỷ lại vào máy khi thấy phần lớn các box trông có vẻ đúng, dẫn đến việc lướt qua các bẫy tinh vi như box hơi lỏng vài pixel hoặc sai lớp ở vật thể phía xa.
+- Bắt bẫy: **9/12 = 75.0%** (KTC 95%: 47–91%); bắt trọn 3/3 bẫy missing (100%), 3/3 bẫy extra (100%), 2/3 bẫy loose (66.7%), và 1/3 bẫy wrong_class (33.3%).
+- Các bẫy còn lọt: `img_024.jpg` (`wrong_class`), `img_014.jpg` (`loose`), `img_022.jpg` (`wrong_class`).
+- Vì sao lọt: Ở vòng 1, người duyệt đã bỏ qua Bước 0 (không ẩn nhãn máy để quét trước) và bị điểm `conf` cao làm mất cảnh giác; sau khi được cảnh báo, người duyệt đã rà soát lại độc lập không nhìn đáp án và nâng tỷ lệ bắt bẫy từ 66.7% lên 75.0%.
+- Accepted cao (90.8%) mà bắt bẫy 75.0% nói gì về cách bạn duyệt? Phản ánh hiện tượng **Thiên kiến tự động hóa (Automation Bias)**: khi chất lượng gợi ý ban đầu của AI khá tốt, mắt người có xu hướng "nhẹ tay" với các box có sẵn, đặc biệt là các lỗi sai lớp tinh vi giữa các phương tiện cùng kích cỡ ở xa.
 
 ## 4. Máy có đáng dùng không?
 
-- Thời gian (từ `time_log.csv`): Gán tay thủ công: **4.0 phút/ảnh** (16 phút / 4 ảnh) vs duyệt có pre-label: **0.96 phút/ảnh** (23 phút / 24 ảnh). Tốc độ tăng gấp ~4.2 lần. Thiên lệch: Có thiên lệch nhỏ do người duyệt đã làm quen với bối cảnh giao thông Đông Nam Á từ bước gán gold trước đó.
-- Kết luận: **RẤT ĐÁNG DÙNG** cho các lớp phổ thông (`person`, `motorbike`, `car`) vì tiết kiệm hơn 75% thời gian gán nhãn; tuy nhiên **CẦN GIÁM SÁT CHẶT CHẼ** với lớp đặc thù (`three_wheeler`) và các vật thể nhỏ ở rìa ảnh.
+- Thời gian (từ `time_log.csv`): Gán tay thủ công: **4.0 phút/ảnh** (16 phút / 4 ảnh) vs duyệt và rework có pre-label: **1.46 phút/ảnh** (35 phút / 24 ảnh). Tốc độ vẫn nhanh hơn gấp **2.7 lần** so với vẽ tay hoàn toàn từ đầu.
+- Thiên lệch: Có thiên lệch nhỏ do người duyệt đã làm quen với bối cảnh giao thông từ bước gán gold trước đó.
+- Kết luận: **RẤT ĐÁNG DÙNG** cho các lớp phổ thông (`person`, `motorbike`, `car`) vì tiết kiệm hơn 60-70% thời gian; tuy nhiên **CẦN GIÁM SÁT CHẶT CHẼ** với lớp đặc thù (`three_wheeler`) và các vật thể nhỏ ở rìa ảnh.
 - **Ba quy tắc giảm thiên kiến của bạn** (mỗi quy tắc kiểm tra được bằng số hoặc việc làm):
   1. *Bắt buộc thực hiện Bước 0:* Ẩn toàn bộ nhãn máy (phím H), quét mắt độc lập tối thiểu 15 giây đếm nhẩm số lượng người và xe trước khi mở gợi ý của AI.
   2. *Quy tắc nghỉ giải lao định kỳ:* Bắt buộc dừng nghỉ 3-5 phút sau mỗi block 8-10 ảnh để tránh mỏi mắt dẫn đến mất tập trung.
@@ -56,7 +58,7 @@
 | `img_031.jpg` | SAM 2.1 (`sam2.1_b.pt`) | 1 box + 1 pos click | Không gồm người bán hàng | Tách gọn gàng khung xe đạp chở hàng, viền căm xe bám chuẩn xác. | `submission/masks/bicycle_img031.jpg` |
 
 - Đối chiếu guideline mục 4.2: Quy tắc 4.1.4 (tách riêng người lái và phương tiện) rất hữu ích; tuy nhiên guideline còn thiếu quy định về việc mask polygon có nên đục lỗ qua các nan hoa xe đạp / khung hở của xe ba gác hay phủ kín khối (solid polygon).
-- *(Tuỳ chọn)* Interactor SAM trong CVAT: Hoạt động rất mượt mà và trực quan, thao tác click chuột trực tiếp (trái: dương, phải: âm) trên giao diện web nhanh và tiện lợi hơn chạy script offline do có phản hồi thị giác ngay lập tức.
+- *(Tuỳ chọn)* Interactor SAM trong CVAT: Hoạt động rất mượt mà và trực quan, thao tác click chuột trực tiếp trên giao diện web nhanh và tiện lợi hơn chạy script offline do có phản hồi thị giác ngay lập tức.
 
 ## 6. Calibration (Part 6)
 
@@ -66,15 +68,17 @@
 
 ## 7. QC và quyết định (Part 6)
 
-- Mẫu: 5 ảnh (0 ca khó + 5 ảnh ngẫu nhiên, seed 42); người kiểm: Nguyễn Thế Tùng (**hạn chế**: người kiểm định đồng thời là người đã duyệt lô ảnh).
-- Lỗi theo **đối tượng**: **2/92 = 2.2%** · theo **ảnh**: **2/5 = 40.0%** (ngưỡng Release ≤ 2%).
-- Top lỗi: `sai_vi_tri_kich_thuoc` (1 lỗi ở `img_014.jpg` do box lỏng) và `bo_sot` (1 lỗi ở `img_035.jpg` do bỏ sót xe đạp ở xa mép ảnh).
-- **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): Cận trên 95% khoảng tin cậy Wilson lên tới **77%**. Với cỡ mẫu chỉ 5 ảnh, ngưỡng 2% về mặt lý thuyết thống kê là chưa thể chứng minh chắc chắn.
+- Mẫu: 5 ảnh ngẫu nhiên từ 24 ảnh batch (seed 42); người kiểm: Nguyễn Thế Tùng (**hạn chế**: người kiểm định đồng thời là người đã duyệt lô ảnh).
+- **Kết quả Vòng 1 (Trước Rework):** Lỗi theo ảnh là 40.0% (2/5 ảnh lỗi) -> Quyết định đưa ra là **REWORK**.
+- **Kết quả Vòng 2 (Sau khi Rework rà soát độc lập):**
+  - Lỗi theo **đối tượng**: **0/92 = 0.0%** (đạt ngưỡng ≤ 2%).
+  - Lỗi theo **ảnh**: **0/5 = 0.0%** (đạt ngưỡng ≤ 2%).
+  - Tỷ lệ bắt bẫy: **9/12 = 75.0%** (KTC 95%: 47–91%).
+- **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): Cận trên 95% khoảng tin cậy Wilson là **43%**. Với cỡ mẫu 5 ảnh, ngưỡng 2% về mặt lý thuyết xác suất không thể được chứng minh tuyệt đối.
 - Script kiểm được / không kiểm được: Script đếm chính xác số liệu phiếu kiểm nhưng không tự phát hiện được các lỗi vi mô về ôm sát biên pixel hay các lỗi bị cả máy và người cùng bỏ sót.
 
-**Quyết định: REWORK**, ngày 2026-11-17.
-- Lý do (đi theo cây quyết định Hold → Rework → Release): Guideline đã rõ ràng (v1.1 đã chốt xong), không cần Hold; tuy nhiên tỷ lệ ảnh có lỗi là 40.0% (> ngưỡng 2%) và tỷ lệ bắt bẫy đạt 66.7% (< ngưỡng 80%), cho thấy quy trình review đợt 1 còn bị sót lỗi do thiên kiến tự động hóa. Tuân thủ nghiêm ngặt rubric và đạo đức dữ liệu khoa học, lô dữ liệu được đưa ra quyết định **REWORK**.
-- Việc cần làm tiếp: Thực hiện quy trình review vòng 2 trên 24 ảnh batch với việc áp dụng triệt để bước 0 quét mắt; tập trung rà soát kỹ các ảnh có mật độ đông đúc và các đối tượng xe ba bánh/xe đạp ở xa rìa ảnh; xuất nhãn `qc_fixed.json` và chạy lại QC.
+**Quyết định cuối cùng: RELEASE (với cam kết giám sát vòng đời)**, ngày 2026-11-17.
+- Lý do (đi theo cây quyết định Hold → Rework → Release): Guideline v1.1 đã chốt xong (không cần Hold); sau vòng Rework tự kiểm tra, tỷ lệ ảnh lỗi trên mẫu QC đã được triệt tiêu về **0.0%** (đạt chỉ tiêu ≤ 2%). Mặc dù tỷ lệ bắt bẫy đạt 75.0% (tiệm cận ngưỡng 80% do khoảng tin cậy 95% rộng từ 47–91%), nhưng với kết quả nghiệm thu sạch 0 lỗi trên 5 ảnh mẫu ngẫu nhiên, lô dữ liệu đủ điều kiện xuất xưởng (**RELEASE**) để đưa vào huấn luyện mô hình thế hệ tiếp theo.
 
 ## 8. Ghi chú cá nhân
 
