@@ -16,4 +16,4 @@
 - Bắt bẫy: 9/12 = 75.0%
 - Thời gian: gán tay 4.0 phút/ảnh; duyệt và rework có pre-label 1.46 phút/ảnh
 - Lỗi QC: 0.0% theo ảnh (0/5), 0.0% theo đối tượng (0/92)
-- **Quyết định:** RELEASE — lý do một dòng: Sau vòng Rework rà soát độc lập, mẫu QC đạt 0% lỗi và tỷ lệ bắt bẫy đạt 75% (KTC 95% 47–91% bao trùm 80%).
+- **Quyết định:** REWORK — lý do một dòng: Tỷ lệ bắt bẫy đạt 75.0% (9/12) vẫn chưa đạt ngưỡng tin cậy 80% (cần tối thiểu 10/12 bẫy) theo cây quyết định chuẩn.

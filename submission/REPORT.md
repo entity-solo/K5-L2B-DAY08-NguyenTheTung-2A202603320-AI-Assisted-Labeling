@@ -77,8 +77,8 @@
 - **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): Cận trên 95% khoảng tin cậy Wilson là **43%**. Với cỡ mẫu 5 ảnh, ngưỡng 2% về mặt lý thuyết xác suất không thể được chứng minh tuyệt đối.
 - Script kiểm được / không kiểm được: Script đếm chính xác số liệu phiếu kiểm nhưng không tự phát hiện được các lỗi vi mô về ôm sát biên pixel hay các lỗi bị cả máy và người cùng bỏ sót.
 
-**Quyết định cuối cùng: RELEASE (với cam kết giám sát vòng đời)**, ngày 2026-11-17.
-- Lý do (đi theo cây quyết định Hold → Rework → Release): Guideline v1.1 đã chốt xong (không cần Hold); sau vòng Rework tự kiểm tra, tỷ lệ ảnh lỗi trên mẫu QC đã được triệt tiêu về **0.0%** (đạt chỉ tiêu ≤ 2%). Mặc dù tỷ lệ bắt bẫy đạt 75.0% (tiệm cận ngưỡng 80% do khoảng tin cậy 95% rộng từ 47–91%), nhưng với kết quả nghiệm thu sạch 0 lỗi trên 5 ảnh mẫu ngẫu nhiên, lô dữ liệu đủ điều kiện xuất xưởng (**RELEASE**) để đưa vào huấn luyện mô hình thế hệ tiếp theo.
+**Quyết định cuối cùng: REWORK**, ngày 2026-11-17.
+- Lý do (đi theo cây quyết định Hold → Rework → Release): Mặc dù sau vòng rà soát độc lập, mẫu kiểm tra QC 5 ảnh đã sạch lỗi (0.0% ảnh lỗi, 0.0% đối tượng lỗi), nhưng tỷ lệ bắt bẫy đạt **9/12 = 75.0%** vẫn nằm dưới ngưỡng tiêu chuẩn nghiêm ngặt **80%** (cần tối thiểu 10/12 bẫy). Đi đúng theo cây quyết định kỹ thuật của môn học: khi bắt bẫy chưa đạt ngưỡng tin cậy, quyết định trung thực và chuẩn xác nhất là **REWORK** để tiếp tục rà soát siết chặt chất lượng, kiên quyết không Release non khi chưa thỏa mãn toàn bộ tiêu chí.
 
 ## 8. Ghi chú cá nhân
 
