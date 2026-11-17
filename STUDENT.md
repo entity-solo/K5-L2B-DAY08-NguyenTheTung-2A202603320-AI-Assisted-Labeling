@@ -5,7 +5,7 @@
 - Lớp (L2 / L3 / khác): K5-L2B
 - Tài khoản GitHub: entity-solo
 - Repo bài nộp (URL): https://github.com/entity-solo/K5-L2B-DAY08-NguyenTheTung-2A202603320-AI-Assisted-Labeling
-- Commit chốt bài (hash): 516e1c4
+- Commit chốt bài (hash): 7c4f9da
 - Máy: Windows, không có GPU (dùng CPU)
 - CVAT (Docker): v2.82.0 (local http://localhost:8080)
 
