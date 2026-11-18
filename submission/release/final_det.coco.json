@@ -2715,12 +2715,12 @@
    "image_id": 9,
    "category_id": 1,
    "bbox": [
-    125.02,
-    332.48,
-    178.33,
-    313.0
+    165.43,
+    304.19,
+    166.54,
+    329.97
    ],
-   "area": 55817.29,
+   "area": 54953.2,
    "iscrowd": 0,
    "segmentation": [],
    "attributes": {
@@ -4531,7 +4531,7 @@
   {
    "id": 231,
    "image_id": 13,
-   "category_id": 1,
+   "category_id": 2,
    "bbox": [
     199.69,
     271.63,
@@ -5063,7 +5063,7 @@
   {
    "id": 259,
    "image_id": 15,
-   "category_id": 4,
+   "category_id": 6,
    "bbox": [
     850.66,
     292.61,

@@ -34,9 +34,12 @@
 
 ## 3. Thiên kiến tự động hóa và ảnh bẫy
 
-- Bắt bẫy: **12/12 = 100.0%** (KTC 95%: 76–100%); bắt trọn 3/3 bẫy missing (100%), 3/3 bẫy extra (100%), 3/3 bẫy loose (100%), và 3/3 bẫy wrong_class (100%).
-- Phân tích quá trình phát hiện: Ở lượt duyệt đầu tiên, người duyệt chỉ đạt 8/12 bẫy (66.7%) do mắc phải **Thiên kiến tự động hóa (Automation Bias)** — khi thấy máy gợi ý đúng hơn 90% box, mắt người bị mỏi và dễ dãi chấp nhận các box điểm `conf` cao, bỏ qua các bẫy tinh vi (như ô tô gán nhầm thành truck ở `img_024`, box người bị lệch ở `img_014`, người gán nhầm thành xe đạp ở `img_022`).
-- Sau khi được cảnh báo bởi quy trình QC, người duyệt đã tiến hành rà soát kỹ lưỡng lại từng ảnh bằng cách ẩn nhãn máy và phóng to 200%, qua đó bắt trọn vẹn toàn bộ 12/12 bẫy cài đặt sẵn.
+- Bắt bẫy: **9/12 = 75.0%** (KTC 95%: 47–91%); trong đó: bắt trọn 3/3 bẫy missing (100%), 3/3 bẫy extra (100%), 2/3 bẫy loose (66.7%), và 1/3 bẫy wrong_class (33.3%).
+- Các bẫy còn lọt:
+  - `img_024.jpg` (`wrong_class`): xe ô tô con ở góc phải xa bị máy gán thành `truck`.
+  - `img_014.jpg` (`loose`): box người ở góc trái bị lệch sang phải ~40px và hụt mép trên.
+  - `img_022.jpg` (`wrong_class`): người đứng ở lề đường bên trái bị máy gán thành `bicycle`.
+- Phân tích hiện tượng: Ở lượt duyệt 1, người duyệt bắt được 8/12 bẫy (66.7%). Sang lượt duyệt 2 sau khi rà soát độc lập, người duyệt bổ sung thêm nhiều xe máy/xe đạp và bắt thêm 1 bẫy missing, nâng kết quả lên **9/12 (75.0%)**. Tuy nhiên, 3 bẫy tinh vi trên vẫn bị lọt. Đây là minh chứng thực tế rõ ràng nhất của **Thiên kiến tự động hóa (Automation Bias)**: khi các gợi ý của AI có tỷ lệ accepted cao (> 90%), mắt người có phản xạ tin tưởng các box điểm `conf` cao và dễ lướt qua các lỗi sai lớp ở xa hoặc box bị lệch viền vài chục pixel nếu không chủ động zoom to 200%.
 
 ## 4. Máy có đáng dùng không?
 
@@ -50,11 +53,11 @@
 
 ## 5. Mask SAM cho 3 vật (Part 5)
 
-| Ảnh | SAM (phiên bản) | Số click | Mask gồm người lái / hàng hoá? | Lỗi quan sát | File trong `masks/` |
+| Ảnh | SAM (phiên bản) | Số click / prompt | Mask gồm người lái / hàng hoá? | Lỗi quan sát | File trong `masks/` |
 |---|---|---|---|---|---|
-| `img_013.jpg` | SAM 2.1 (`sam2.1_b.pt`) | 3 clicks (2 pos, 1 neg) | Không gồm người lái | Tách tốt thân xe tuk-tuk nhưng phần mui bạt phía sau dễ bị lem ra hậu cảnh nếu không có click âm. | `submission/masks/tuktuk_img013.jpg` |
-| `img_004.jpg` | SAM 2.1 (`sam2.1_b.pt`) | 1 box + 1 pos click | Không gồm người lái | Bám sát viền xe tuk-tuk màu vàng xanh, không bị nuốt phần bánh xe. | `submission/masks/tuktuk_img004.jpg` |
-| `img_031.jpg` | SAM 2.1 (`sam2.1_b.pt`) | 1 box + 1 pos click | Không gồm người bán hàng | Tách gọn gàng khung xe đạp chở hàng, viền căm xe bám chuẩn xác. | `submission/masks/bicycle_img031.jpg` |
+| `img_013.jpg` | SAM 2.1 (`sam2.1_b.pt`) | 1 box + 2 pos + 3 neg clicks | **CÓ gồm người lái** (bị nuốt tài xế mặc áo tím vào mask xe) | SAM gặp khó khi bóc tách người lái ngồi trong cabin mở của xe tuk-tuk. Dù đã dùng box gợi ý và đặt 3 click âm ngay trên đầu/vai người lái, mask vẫn bị dính thân người tài xế vào thân xe và lem nhẹ sang bánh xe máy bên cạnh (vi phạm quy tắc 4.1.4 nếu không sửa tay). | `submission/masks/tuktuk_img013.jpg` |
+| `img_004.jpg` | SAM 2.1 (`sam2.1_b.pt`) | 1 box + 1 pos click | Không gồm người lái (xe đỗ không người) | Bám sát viền xe tuk-tuk màu vàng xanh, biên dạng thân xe và bánh xe được tách rất sắc nét, không bị lem ra lòng đường hay xe lân cận. | `submission/masks/tuktuk_img004.jpg` |
+| `img_031.jpg` | SAM 2.1 (`sam2.1_b.pt`) | 1 box + 4 pos + 1 neg clicks | **KHÔNG gồm hàng hoá** (bỏ sót mẹt hoa quả) | Căm xe / nan hoa bị thủng lỗ chỗ, viền răng cưa nham nhở do cấu trúc mảnh; SAM xem mẹt nhãn/cà chua cồng kềnh là vật thể rời nên không gom vào mask xe đạp (muốn gom hàng hoá theo quy tắc 4.1.4 phải tốn thêm nhiều click dương vào từng mẹt quả). | `submission/masks/bicycle_img031.jpg` |
 
 - Đối chiếu guideline mục 4.2: Quy tắc 4.1.4 (tách riêng người lái và phương tiện) rất hữu ích; tuy nhiên guideline còn thiếu quy định về việc mask polygon có nên đục lỗ qua các nan hoa xe đạp / khung hở của xe ba gác hay phủ kín khối (solid polygon).
 - *(Tuỳ chọn)* Interactor SAM trong CVAT: Hoạt động rất mượt mà và trực quan, thao tác click chuột trực tiếp trên giao diện web nhanh và tiện lợi hơn chạy script offline do có phản hồi thị giác ngay lập tức.
@@ -68,16 +71,14 @@
 ## 7. QC và quyết định (Part 6)
 
 - Mẫu: 5 ảnh ngẫu nhiên từ 24 ảnh batch (seed 42); người kiểm: Nguyễn Thế Tùng (**hạn chế**: người kiểm định đồng thời là người đã duyệt lô ảnh).
-- **Kết quả Vòng 1 (Trước Rework):** Lỗi theo ảnh là 40.0% (2/5) và bắt bẫy đạt 66.7% -> Kích hoạt quy trình **REWORK**.
-- **Kết quả Vòng 2 (Sau khi Rework hoàn thiện):**
-  - Lỗi theo **đối tượng**: **0/92 = 0.0%** (đạt tiêu chuẩn ≤ 2%).
-  - Lỗi theo **ảnh**: **0/5 = 0.0%** (đạt tiêu chuẩn ≤ 2%).
-  - Tỷ lệ bắt bẫy: **12/12 = 100.0%** (đạt tiêu chuẩn ≥ 80%).
+- Lỗi theo **đối tượng**: **0/92 = 0.0%** (đạt tiêu chuẩn ≤ 2%).
+- Lỗi theo **ảnh**: **0/5 = 0.0%** (đạt tiêu chuẩn ≤ 2%).
+- Tỷ lệ bắt bẫy: **9/12 = 75.0%** (chưa đạt ngưỡng ≥ 80%).
 - **Giới hạn mẫu nhỏ** (cận trên 95% trong `qc_report_auto.md`): Cận trên 95% khoảng tin cậy Wilson là **43%**. Với cỡ mẫu 5 ảnh, ngưỡng 2% về mặt lý thuyết xác suất không thể được chứng minh tuyệt đối.
 - Script kiểm được / không kiểm được: Script đếm chính xác số liệu phiếu kiểm nhưng không tự phát hiện được các lỗi vi mô về ôm sát biên pixel hay các lỗi bị cả máy và người cùng bỏ sót.
 
-**Quyết định cuối cùng: RELEASE**, ngày 2026-11-17.
-- Lý do (đi theo cây quyết định Hold → Rework → Release): Guideline v1.1 đã hoàn tất (không cần Hold); sau vòng Rework triệt để, tỷ lệ ảnh lỗi trên mẫu QC đạt **0.0%** (≤ 2%), không có lỗi hệ thống, và tỷ lệ bắt bẫy đạt tuyệt đối **12/12 = 100.0%** (vượt xa ngưỡng yêu cầu 80%). Toàn bộ chỉ số đều thỏa mãn đầy đủ các điều kiện nghiêm ngặt của cây quyết định, chính thức **RELEASE** lô dữ liệu.
+**Quyết định cuối cùng: REWORK**, ngày 2026-11-17.
+- Lý do (đi theo cây quyết định Hold → Rework → Release): Mặc dù trên mẫu kiểm tra QC 5 ảnh sạch lỗi (0.0% ảnh lỗi, 0.0% đối tượng lỗi), nhưng tỷ lệ bắt bẫy đạt **9/12 = 75.0%** vẫn nằm dưới ngưỡng tin cậy **80%** (cần tối thiểu 10/12 bẫy). Đi đúng theo cây quyết định kỹ thuật của môn học: khi bắt bẫy chưa đạt ngưỡng, quyết định trung thực và chuẩn xác nhất là **REWORK** để tiếp tục rà soát siết chặt chất lượng, kiên quyết không Release non khi chưa thỏa mãn toàn bộ tiêu chí.
 
 ## 8. Ghi chú cá nhân
 

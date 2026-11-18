@@ -13,7 +13,7 @@
 
 - Máy: accepted / edited / deleted: 386 / 12 / 28 (mẫu số: 426 box máy); added: 63 (mẫu số: 461 đối tượng sau duyệt)
 - So với gold: precision / recall của **máy**: 52.7% (29/55) / 72.5% (29/40)
-- Bắt bẫy: 12/12 = 100.0%
+- Bắt bẫy: 9/12 = 75.0%
 - Thời gian: gán tay 4.0 phút/ảnh; duyệt và rework có pre-label 1.46 phút/ảnh
 - Lỗi QC: 0.0% theo ảnh (0/5), 0.0% theo đối tượng (0/92)
-- **Quyết định:** RELEASE — lý do một dòng: Toàn bộ tiêu chí đạt chuẩn xuất xưởng: Lỗi QC đạt 0.0% và tỷ lệ bắt bẫy đạt tuyệt đối 12/12 = 100% sau vòng Rework.
+- **Quyết định:** REWORK — lý do một dòng: Tỷ lệ bắt bẫy đạt 75.0% (9/12) vẫn chưa đạt ngưỡng tin cậy 80% (cần tối thiểu 10/12 bẫy) theo cây quyết định chuẩn.

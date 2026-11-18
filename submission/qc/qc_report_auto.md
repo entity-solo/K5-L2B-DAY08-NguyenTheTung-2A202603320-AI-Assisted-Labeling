@@ -13,7 +13,7 @@
 | **Ảnh có lỗi** (dùng cho ngưỡng) | 0/5 = 0.0% | 5 ảnh trong mẫu |
 | Máy: accepted / edited / deleted | 386/426 = 90.6% / 12/426 = 2.8% / 28/426 = 6.6% | 426 box máy |
 | Máy: added | 63/461 = 13.7% | 461 đối tượng sau duyệt |
-| Bắt lỗi bẫy | 12/12 = 100.0% | 12 bẫy |
+| Bắt lỗi bẫy | 9/12 = 75.0% | 12 bẫy |
 
 ## Top 3 loại lỗi
 (không ghi nhận lỗi nào)
@@ -22,8 +22,8 @@
 - 0 ảnh lỗi trong 5 ảnh mẫu: cận trên 95% (Wilson) của tỉ lệ ảnh lỗi thật là **43%**. Ngưỡng 2% không thể được **chứng minh** bằng mẫu nhỏ như vậy: hãy nói rõ giới hạn này trong báo cáo.
 
 ## Gợi ý quyết định
-**RELEASE**
+**REWORK**
 
-- ảnh lỗi 0.0% <= 2%, không lỗi hệ thống, bắt bẫy / nhất quán đạt (nếu đã đo)
+- bắt bẫy 75% < 80% -> lô duyệt chưa đáng tin
 
 Cây quyết định: Hold (guideline chưa rõ / dữ liệu hỏng) -> Rework (> ngưỡng, lỗi lặp, bắt bẫy / nhất quán thấp) -> Release.
